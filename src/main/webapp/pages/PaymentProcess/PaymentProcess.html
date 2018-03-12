@@ -1,0 +1,322 @@
+<wm-page data-ng-controller="PaymentProcessPageController" pagetitle="Payment Process" name="page1">
+    <wm-content name="content1">
+        <wm-page-content columnwidth="12" name="page_content1" padding="unset 5em">
+            <wm-layoutgrid name="layoutgrid12">
+                <wm-gridrow name="gridrow26">
+                    <wm-gridcolumn columnwidth="8" name="gridcolumn57_1">
+                        <wm-wizard name="wizard_payment" nextbtnlabel="Continue" cancelbtnlabel="Order Later" cancelable="true" stepstyle="justified" donebtnlabel="Confirm Order" on-done="wizard_paymentDone($scope, steps);Variables.LV_InsertOrders.createRecord()"
+                            on-cancel="Variables.goToPage_MyCart.invoke()">
+                            <wm-wizardstep name="wizardstep1" title="Your Cart Products">
+                                <wm-button class="btn-default btn-flat pull-right" caption="edit" type="button" margin="unset 0.5em 1em 0.5em" name="button2" iconclass="wi wi-pencil fa-2x" on-click="Variables.goToPage_MyCart.invoke()" hint="Edit" show="true"
+                                    fontunit="em" iconposition="left" padding="unset 0.2em"></wm-button>
+                                <wm-list listclass="list-group" template="true" itemsperrow="xs-1 sm-1 md-1 lg-1" class="list-card pull-left" dataset="bind:Variables.LV_CartItemsData.dataSet" navigation="None" name="Cart_Details" navigationalign="center"
+                                    nodatamessage="No items in your cart" width="100%" disableitem="false">
+                                    <wm-listtemplate layout="media" name="listtemplate1">
+                                        <wm-card name="Pic_CartList" title="">
+                                            <wm-card-content padding=".5em unset" name="card_content_CartList">
+                                                <wm-layoutgrid name="layoutgrid9">
+                                                    <wm-gridrow name="gridrow21_1">
+                                                        <wm-gridcolumn columnwidth="3" class="col-sm-3 hidden-xs" name="gridcolumn43"></wm-gridcolumn>
+                                                        <wm-gridcolumn columnwidth="4" class="hidden-sm hidden-xs" name="gridcolumn44">
+                                                            <wm-label padding="unset 0.5em" caption="Description" fontunit="em" name="label21"></wm-label>
+                                                        </wm-gridcolumn>
+                                                        <wm-gridcolumn columnwidth="2" horizontalalign="left" class="hidden-sm hidden-xs" name="gridcolumn45_1">
+                                                            <wm-label padding="unset unset unset .7em" caption="Qty" fontunit="em" name="label22"></wm-label>
+                                                        </wm-gridcolumn>
+                                                        <wm-gridcolumn columnwidth="2" class="hidden-sm hidden-xs" padding="unset unset unset 1em" name="gridcolumn46_1">
+                                                            <wm-label caption="Price" fontunit="em" name="label23"></wm-label>
+                                                        </wm-gridcolumn>
+                                                        <wm-gridcolumn columnwidth="1" name="gridcolumn47"></wm-gridcolumn>
+                                                    </wm-gridrow>
+                                                    <wm-gridrow name="gridrow22_1">
+                                                        <wm-gridcolumn columnwidth="3" horizontalalign="center" class="col-sm-3 col-xs-4" name="gridcolumn48">
+                                                            <wm-picture name="picture_CartList" picturesource="bind:&quot;http://wmstudio-apps.s3.amazonaws.com/eshop/Products/Thumbnails&quot;+Variables.LV_CartItemsData.dataSet.data[$i].productDetails.imageUrl"
+                                                                height="5em"></wm-picture>
+                                                        </wm-gridcolumn>
+                                                        <wm-gridcolumn columnwidth="4" padding="1em unset unset unset" class="col-sm-4 col-xs-3" name="gridcolumn49">
+                                                            <wm-label name="Name" class="p" caption="bind:Variables.LV_CartItemsData.dataSet.data[$i].productDetails.productName" fontunit="em" fontweight="bold" padding="unset .2em unset unset"></wm-label>
+                                                        </wm-gridcolumn>
+                                                        <wm-gridcolumn columnwidth="2" horizontalalign="left" class="col-sm-2 col-xs-2" name="gridcolumn50">
+                                                            <wm-select width="55px" dataset="1,2,3" on-change="Variables.LV_Update_CartInfo.updateRecord()" name="select_Qty" datavalue="bind:Variables.LV_CartItemsData.dataSet.data[$i].productQuantity"></wm-select>
+                                                        </wm-gridcolumn>
+                                                        <wm-gridcolumn columnwidth="3" padding="1em unset unset 1em" class="col-sm-1 col-xs-2" name="gridcolumn51">
+                                                            <wm-label padding="unset unset unset .5px" name="label9_1" caption="bind:Variables.Format_Price.dataSet.dataValue" fontweight="bold" fontsize="1.1" fontunit="em"></wm-label>
+                                                            <wm-label padding="unset 0.5em unset unset" name="Price" caption="bind:(item.productDetails.price)*(Widgets.Cart_Details.currentItemWidgets.select_Qty.datavalue)" fontweight="bold"
+                                                                fontunit="em" width="80%" textalign="left"></wm-label>
+                                                        </wm-gridcolumn>
+                                                    </wm-gridrow>
+                                                </wm-layoutgrid>
+                                            </wm-card-content>
+                                        </wm-card>
+                                    </wm-listtemplate>
+                                </wm-list>
+                            </wm-wizardstep>
+                            <wm-wizardstep name="wizardstep2" title="Delivery Address">
+                                <wm-layoutgrid columns="2" name="layoutgrid3">
+                                    <wm-gridrow name="gridrow22_2">
+                                        <wm-gridcolumn columnwidth="12" name="gridcolumn41_2">
+                                            <wm-list listclass="list-group" template="true" itemsperrow="xs-1 sm-2 md-3 lg-2" class="list-card" dataset="bind:Variables.UserAddressDetailsData.dataSet" navigation="None" name="livelist_AddressDetails" selectfirstitem="true"
+                                                nodatamessage="Add an address for product to be delivered.">
+                                                <wm-listtemplate layout="media" name="listtemplate4_1">
+                                                    <wm-card name="card4_1">
+                                                        <wm-card-content fontsize="0.8" fontunit="em" name="card_content4_1">
+                                                            <wm-layoutgrid columns="2" name="layoutgrid12_1">
+                                                                <wm-gridrow name="gridrow23_1">
+                                                                    <wm-gridcolumn colwidth="6" columnwidth="12" class="col-xs-6" name="gridcolumn42">
+                                                                        <wm-icon name="icon4" show="bind:Widgets.livelist_AddressDetails.currentItem.userAddresssId===Widgets.livelist_AddressDetails.selecteditem.userAddresssId" iconclass="wi wi-check-circle"
+                                                                            class="pull-right" animation="fadeIn" color="#35b316"></wm-icon>
+                                                                        <wm-label caption="bind:Variables.UserAddressDetailsData.dataSet.data[$i].userDetails.userName" class="h4" margin="0em unset 1em unset" whitespace="nowrap" fontunit="em"
+                                                                            name="Name" fontweight="bold" width="auto"></wm-label>
+                                                                        <wm-icon name="street" caption="bind:Variables.UserAddressDetailsData.dataSet.data[$i].address" iconclass="wi wi-location-on fa-2x" class="p"></wm-icon>
+                                                                        <wm-label name="JobTitle" caption="bind:Variables.UserAddressDetailsData.dataSet.data[$i].city" class="p" margin="0em unset unset 2em" whitespace="nowrap" fontsize="1.1"
+                                                                            fontunit="em"></wm-label>
+                                                                        <wm-label name="add_country" caption="bind:Variables.UserAddressDetailsData.dataSet.data[$i].country + ','" fontsize="1.1" fontunit="em" margin="unset unset unset 2em"></wm-label>
+                                                                        <wm-label name="Department" caption="bind:Variables.UserAddressDetailsData.dataSet.data[$i].state" whitespace="nowrap" fontsize="1.1" fontunit="em"></wm-label>
+                                                                        <wm-label name="Location" caption="bind:Variables.UserAddressDetailsData.dataSet.data[$i].pincode" class="p" fontsize="1.1" fontunit="em" margin="unset unset 1em 2em"></wm-label>
+                                                                        <wm-icon name="icon2" iconclass="wi wi-call fa-2x" caption="bind:Variables.UserAddressDetailsData.dataSet.data[$i].userDetails.phoneNumber"></wm-icon>
+                                                                        <wm-anchor margin="unset 0.5em" name="anchor2" caption="Edit" iconclass="wi wi-pencil fa-lg" on-click="Widgets.formDialog_Editadd.open()" class="pull-right"></wm-anchor>
+                                                                        <wm-button class="btn-default btn-flat pull-right" caption="Edit" type="button" margin="unset 0.5em" name="button_editAddress" iconclass="wi wi-edit fa-lg" hint="Edit Address"
+                                                                            on-click="Widgets.formDialog_Editadd.open()" show="false"></wm-button>
+                                                                    </wm-gridcolumn>
+                                                                </wm-gridrow>
+                                                            </wm-layoutgrid>
+                                                        </wm-card-content>
+                                                    </wm-card>
+                                                </wm-listtemplate>
+                                            </wm-list>
+                                        </wm-gridcolumn>
+                                    </wm-gridrow>
+                                    <wm-gridrow name="gridrow18" class="bordered-top">
+                                        <wm-gridcolumn columnwidth="6" name="gridcolumn36" padding="1em unset">
+                                            <wm-anchor margin="unset 0.5em" name="anchor1" caption="Add a new address" on-click="Widgets.useraddressdetailsDialog.open()" iconclass="wi wi-plus" fontsize="1.2" fontunit="em"></wm-anchor>
+                                        </wm-gridcolumn>
+                                        <wm-gridcolumn columnwidth="6" name="gridcolumn43_3">
+                                            <wm-container name="container5" margin="0.2em unset unset unset">
+                                                <wm-message name="message1" caption="Order will be delivered to the selected address" type="info" hideclose="true" show="true"></wm-message>
+                                            </wm-container>
+                                        </wm-gridcolumn>
+                                    </wm-gridrow>
+                                </wm-layoutgrid>
+                            </wm-wizardstep>
+                            <wm-wizardstep name="wizardstep4" title="Payment">
+                                <wm-container name="container14">
+                                    <wm-layoutgrid name="layoutgrid10_1">
+                                        <wm-gridrow name="gridrow12">
+                                            <wm-gridcolumn columnwidth="3" name="gridcolumn27_1" padding="unset unset 2em unset" class="bordered-right">
+                                                <wm-radioset height="auto" name="radioset5" layout="stacked" dataset="Credit Card,Debit Card,Net Banking,Cash On Delivery(COD)" selectedvalue="Cash On Delivery(COD)" required="false" on-change="radioset5Change($event, $scope, newVal, oldVal)"></wm-radioset>
+                                            </wm-gridcolumn>
+                                            <wm-gridcolumn columnwidth="9" name="gridcolumn41_3">
+                                                <wm-layoutgrid name="layoutgrid13_1">
+                                                    <wm-gridrow name="gridrow25">
+                                                        <wm-gridcolumn columnwidth="6" name="gridcolumn44_2">
+                                                            <wm-select name="select4" dataset="bind:Variables.Static_BankOptions.dataSet" show="bind:Widgets.radioset5.datavalue === 'Credit Card'||Widgets.radioset5.datavalue === 'Debit Card'||Widgets.radioset5.datavalue === 'Net Banking'"
+                                                                required="bind:Widgets.radioset5.datavalue =='Credit Card'||Widgets.radioset5.datavalue === 'Debit Card'||Widgets.radioset5.datavalue === 'Net Banking'" margin="unset unset unset 0.3em" datafield="dataValue"
+                                                                displayfield="name" placeholder="---Select Bank---"></wm-select>
+                                                        </wm-gridcolumn>
+                                                        <wm-gridcolumn columnwidth="6" name="gridcolumn46"></wm-gridcolumn>
+                                                    </wm-gridrow>
+                                                    <wm-gridrow name="gridrow25_1">
+                                                        <wm-gridcolumn columnwidth="12" name="gridcolumn44_3">
+                                                            <wm-form errormessage="" captionposition="top" title="" enctype="application/x-www-form-urlencoded" method="post" captionalign="left" name="form1" show="bind:(Widgets.radioset5.datavalue !== 'Net Banking' &amp;&amp; Widgets.radioset5.datavalue !== 'Cash On Delivery(COD)') &amp;&amp; !!Widgets.select4.datavalue"
+                                                                deferload="true">
+                                                                <wm-layoutgrid columns="2" name="layoutgrid14">
+                                                                    <wm-gridrow name="gridrow26_2">
+                                                                        <wm-gridcolumn name="gridcolumn45_3" columnwidth="4">
+                                                                            <wm-form-field displayname="Name On Card" widget="text" show="true" type="custom" name="form_field17" required="bind:Widgets.radioset5.datavalue =='Credit Card'||Widgets.radioset5.datavalue === 'Debit Card'"
+                                                                                regexp="[a-zA-Z\s]+" maxchars="32" autocomplete="false" validationmessage="Special characters and numerics are not allowed. Please enter a valid name."></wm-form-field>
+                                                                        </wm-gridcolumn>
+                                                                        <wm-gridcolumn columnwidth="8" name="gridcolumn46_2">
+                                                                            <wm-label padding="unset 0.5em" name="label30_2" caption="Expiry date" class="col-md-12"></wm-label>
+                                                                            <wm-form-field widget="text" show="true" type="custom" name="form_field18" inputtype="number" placeholder="MM" minvalue="01" maxvalue="12" step="1" maxchars="2" class="col-md-6"></wm-form-field>
+                                                                            <wm-form-field widget="text" show="true" type="custom" name="form_field20" inputtype="number" placeholder="YYYY" maxchars="4" step="1" minvalue="bind:getCurrentYear()"
+                                                                                maxvalue="bind:getCurrentYear() + 50" class="col-md-6"></wm-form-field>
+                                                                        </wm-gridcolumn>
+                                                                    </wm-gridrow>
+                                                                    <wm-gridrow name="gridrow27_1">
+                                                                        <wm-gridcolumn columnwidth="4" name="gridcolumn47_2">
+                                                                            <wm-form-field displayname="Card Number" widget="text" show="true" type="custom" name="form_field15" required="bind:Widgets.radioset5.datavalue =='Credit Card'||Widgets.radioset5.datavalue === 'Debit Card'"
+                                                                                placeholder="" displayformat="9999-9999-9999-9999" updateon="default" autocomplete="false"></wm-form-field>
+                                                                        </wm-gridcolumn>
+                                                                        <wm-gridcolumn columnwidth="4" name="gridcolumn48_2">
+                                                                            <wm-form-field displayname="CVV" widget="text" show="true" type="custom" name="form_field14" required="bind:Widgets.radioset5.datavalue =='Credit Card'||Widgets.radioset5.datavalue === 'Debit Card'"
+                                                                                inputtype="password" updateon="default" autocomplete="false" maxchars="3" placeholder="" on-keypress="form_field14Keypress($event, $scope)"></wm-form-field>
+                                                                        </wm-gridcolumn>
+                                                                        <wm-gridcolumn columnwidth="4" name="gridcolumn45_2"></wm-gridcolumn>
+                                                                    </wm-gridrow>
+                                                                </wm-layoutgrid>
+                                                            </wm-form>
+                                                        </wm-gridcolumn>
+                                                    </wm-gridrow>
+                                                    <wm-gridrow name="gridrow23_5">
+                                                        <wm-gridcolumn columnwidth="12" name="gridcolumn41_5">
+                                                            <wm-label padding="unset 5em" name="lbl_COD" caption="bind:&quot;Please ensure you have the cash ready when our executive delivers the product to you on the stipulated date.<br>For better experience please keep the exact change amount ready.&quot;"
+                                                                margin="3.5em unset unset unset" show="bind:Widgets.radioset5.datavalue==='Cash On Delivery(COD)'" deferload="true" required="false"></wm-label>
+                                                        </wm-gridcolumn>
+                                                    </wm-gridrow>
+                                                </wm-layoutgrid>
+                                            </wm-gridcolumn>
+                                        </wm-gridrow>
+                                    </wm-layoutgrid>
+                                </wm-container>
+                            </wm-wizardstep>
+                            <wm-wizardstep name="wizardstep5" title="Confirm Order">
+                                <wm-layoutgrid name="layoutgrid11_1">
+                                    <wm-gridrow name="gridrow21_2" class="bordered-bottom" padding="unset unset 1em unset">
+                                        <wm-gridcolumn columnwidth="4" name="gridcolumn40">
+                                            <wm-container name="container10" padding="unset unset unset 2em">
+                                                <wm-label padding="unset 0.5em unset unset" name="label12" caption="Shipping Address" class="p" fontweight="bold"></wm-label>
+                                                <wm-label padding="unset 0.5em" name="label13" caption="Deliver to:" required="false" class="p" fontsize="1.1" fontunit="em" margin="1em unset 0em unset"></wm-label>
+                                                <wm-label padding="unset 0.5em" caption="bind:Widgets.livelist_AddressDetails.selecteditem.userDetails.userName" required="false" name="label32_1" class="h4" fontweight="bold"></wm-label>
+                                                <wm-label padding="unset 0.5em" caption="bind:Widgets.livelist_AddressDetails.selecteditem.address + ',' + Widgets.livelist_AddressDetails.selecteditem.city + ','" required="false" name="label33"
+                                                    class="p"></wm-label>
+                                                <wm-label padding="unset 0.5em" caption="bind:Widgets.livelist_AddressDetails.selecteditem.state + ',' + Widgets.livelist_AddressDetails.selecteditem.country + ','" required="false" name="label34"
+                                                    class="p"></wm-label>
+                                                <wm-label padding="unset 0.5em" caption="bind:Widgets.livelist_AddressDetails.selecteditem.pincode" required="false" name="label35" class="p" margin="unset unset 0px unset"></wm-label>
+                                            </wm-container>
+                                        </wm-gridcolumn>
+                                        <wm-gridcolumn columnwidth="2" name="gridcolumn41"></wm-gridcolumn>
+                                        <wm-gridcolumn columnwidth="6" name="gridcolumn45">
+                                            <wm-label padding="unset 0.5em unset unset" caption="Payment Method" class="p" fontweight="bold" name="label28"></wm-label>
+                                            <wm-label padding="unset 0.5em" name="label30_1" caption="bind:Widgets.radioset5.datavalue"></wm-label>
+                                            <wm-label padding="unset 0.5em" name="label29" caption="bind:'We also accept Credit/Debit cards on delivering subject to availability of the payment device. Please check with the delivery agent.'"
+                                                show="bind:Widgets.radioset5.datavalue==='Cash On Delivery(COD)'"></wm-label>
+                                            <wm-label padding="unset 0.5em" name="label31_1" caption="bind:'************' + Widgets.form1.formWidgets.form_field15.datavalue.substr(12,15)" show="bind:Widgets.radioset5.datavalue === 'Credit Card'|| Widgets.radioset5.datavalue === 'Debit Card'"></wm-label>
+                                        </wm-gridcolumn>
+                                    </wm-gridrow>
+                                    <wm-gridrow name="gridrow21_4">
+                                        <wm-gridcolumn columnwidth="12" name="gridcolumn39">
+                                            <wm-list listclass="list-group" template="true" itemsperrow="xs-1 sm-1 md-1 lg-1" class="list-card" dataset="bind:Variables.LV_CartItemsData.dataSet" navigation="Scroll" name="livelist_OrderView" padding="1em unset unset unset"
+                                                disableitem="true">
+                                                <wm-listtemplate layout="media" name="listtemplate3">
+                                                    <wm-card name="card3">
+                                                        <wm-card-content fontsize="0.8" fontunit="em" name="card_content3">
+                                                            <wm-layoutgrid columns="2" name="layoutgrid11_2">
+                                                                <wm-gridrow name="gridrow21_3">
+                                                                    <wm-gridcolumn colwidth="6" columnwidth="12" padding="unset 1.25em unset unset" class="col-xs-6" name="gridcolumn41_1">
+                                                                        <wm-container name="container10_1">
+                                                                            <wm-layoutgrid name="layoutgrid12_2">
+                                                                                <wm-gridrow name="gridrow24_2">
+                                                                                    <wm-gridcolumn columnwidth="2" name="gridcolumn42_2" horizontalalign="left">
+                                                                                        <wm-icon name="icon4_1" iconclass="wi wi-fiber-manual-record" class="inline" opacity="0.7"></wm-icon>
+                                                                                        <wm-picture name="picture2" picturesource="bind:&quot;http://wmstudio-apps.s3.amazonaws.com/eshop/Products/Thumbnails&quot;+Variables.LV_CartItemsData.dataSet.data[$i].productDetails.imageUrl"
+                                                                                            width="60%" class="inline"></wm-picture>
+                                                                                    </wm-gridcolumn>
+                                                                                    <wm-gridcolumn columnwidth="9" name="gridcolumn43_1">
+                                                                                        <wm-label caption="bind:Variables.LV_CartItemsData.dataSet.productDetails.productName" class="h4" margin="0px unset" whitespace="nowrap" name="lbl_ProdName"></wm-label>
+                                                                                        <wm-label name="lbl_Price_1" caption="bind:Variables.Format_Price.dataSet.dataValue + ' ' + Variables.LV_CartItemsData.dataSet.data[$i].totalPrice" class="h5"
+                                                                                            margin="0em .5em 0em 1em" whitespace="nowrap" width="auto"></wm-label>
+                                                                                        <wm-label name="lbl_Qty_1" caption="bind:'Quantity - ' + Variables.LV_CartItemsData.dataSet.data[$i].productQuantity" class="text-muted" margin="0em unset"
+                                                                                            whitespace="nowrap"></wm-label>
+                                                                                    </wm-gridcolumn>
+                                                                                </wm-gridrow>
+                                                                            </wm-layoutgrid>
+                                                                        </wm-container>
+                                                                    </wm-gridcolumn>
+                                                                </wm-gridrow>
+                                                            </wm-layoutgrid>
+                                                        </wm-card-content>
+                                                    </wm-card>
+                                                </wm-listtemplate>
+                                            </wm-list>
+                                        </wm-gridcolumn>
+                                    </wm-gridrow>
+                                </wm-layoutgrid>
+                            </wm-wizardstep>
+                        </wm-wizard>
+                    </wm-gridcolumn>
+                    <wm-gridcolumn columnwidth="4" name="gridcolumn58" padding="unset unset unset 3em">
+                        <wm-panel iconclass="" autoclose="outsideClick" name="panel1" class="panel-default" title="Order Summary">
+                            <wm-layoutgrid name="layoutgrid13">
+                                <wm-gridrow name="gridrow23_2">
+                                    <wm-gridcolumn columnwidth="12" horizontalalign="left" padding="unset unset unset 1em" name="gridcolumn50_1">
+                                        <wm-label caption="Total Items :" fontunit="em" textalign="left" width="86" name="label28_1"></wm-label>
+                                        <wm-label caption="bind:(Variables.SV_TotalItemsPriceOfCartProd.dataSet[$i].QTY|| 0)" fontsize="1.2" fontunit="em" textalign="left" fontweight="bold" margin="unset unset unset 1em" name="label29_1"></wm-label>
+                                    </wm-gridcolumn>
+                                </wm-gridrow>
+                                <wm-gridrow name="gridrow24_1">
+                                    <wm-gridcolumn columnwidth="12" horizontalalign="left" padding="unset unset 1em 1em" name="gridcolumn51_1">
+                                        <wm-container name="container11_1" show="bind:Widgets.label29_1.caption==0?false:true">
+                                            <wm-label caption="Total Amount :" fontunit="em" textalign="left" width="86" name="label30"></wm-label>
+                                            <wm-label caption="bind:(Variables.Format_Price.dataSet.dataValue+Variables.SV_TotalItemsPriceOfCartProd.dataSet[$i].PRICE)||0" fontsize="1.2" fontunit="em" textalign="left" show="true" fontweight="bold"
+                                                margin="unset unset unset 1em" name="label31"></wm-label>
+                                        </wm-container>
+                                    </wm-gridcolumn>
+                                </wm-gridrow>
+                            </wm-layoutgrid>
+                        </wm-panel>
+                    </wm-gridcolumn>
+                </wm-gridrow>
+            </wm-layoutgrid>
+        </wm-page-content>
+    </wm-content>
+    <wm-view class="dialog-view" name="view1">
+        <wm-dialog dialogtype="design-dialog" title="New Address" iconclass="wi wi-plus" modal="true" name="useraddressdetailsDialog">
+            <wm-liveform novalidate="false" errormessage="" title="" defaultmode="Edit" dataset="bind:Variables.LV_UserAddrDetails.dataSet" captionalign="left" captionposition="top" name="liveform2" insertmessage="Address added successfully" updatemessage="Address updated successfully"
+                deletemessage="Address deleted successfully" on-success="Widgets.useraddressdetailsDialog.close();Variables.UserAddressDetailsData.listRecords()">
+                <wm-layoutgrid columns="2" name="layoutgrid4">
+                    <wm-gridrow name="gridrow8">
+                        <wm-gridcolumn columnwidth="6" name="gridcolumn19">
+                            <wm-form-field name="address" displayname="Address" show="true" primary-key="false" generator="assigned" key="address" type="string" readonly="false" required="true" widget="text" maxchars="255" inputtype="text" placeholder="Enter value"></wm-form-field>
+                        </wm-gridcolumn>
+                        <wm-gridcolumn columnwidth="6" name="gridcolumn20_1">
+                            <wm-form-field name="city" displayname="City" show="true" primary-key="false" generator="assigned" key="city" type="string" readonly="false" required="true" widget="text" maxchars="255" inputtype="text" placeholder="Enter value"></wm-form-field>
+                        </wm-gridcolumn>
+                    </wm-gridrow>
+                    <wm-gridrow name="gridrow9">
+                        <wm-gridcolumn columnwidth="6" name="gridcolumn21_1">
+                            <wm-form-field name="state" displayname="State" show="true" primary-key="false" generator="assigned" key="state" type="string" readonly="false" required="true" widget="text" maxchars="255" inputtype="text" placeholder="Enter value"></wm-form-field>
+                        </wm-gridcolumn>
+                        <wm-gridcolumn columnwidth="6" name="gridcolumn22_1">
+                            <wm-form-field name="country" displayname="Country" show="true" primary-key="false" generator="assigned" key="country" type="string" readonly="false" required="true" widget="text" maxchars="255" inputtype="text" placeholder="Enter value"></wm-form-field>
+                        </wm-gridcolumn>
+                    </wm-gridrow>
+                    <wm-gridrow name="gridrow10_1">
+                        <wm-gridcolumn columnwidth="6" name="gridcolumn23_1">
+                            <wm-form-field name="pincode" displayname="Pincode" show="true" primary-key="false" generator="assigned" key="pincode" type="integer" readonly="false" required="true" step="0" widget="number" inputtype="number" placeholder="Enter value"></wm-form-field>
+                        </wm-gridcolumn>
+                        <wm-gridcolumn columnwidth="6" name="gridcolumn46_3"></wm-gridcolumn>
+                    </wm-gridrow>
+                </wm-layoutgrid>
+                <wm-form-field name="userAddresssId" displayname="User Addresss Id" show="false" primary-key="true" generator="identity" key="userAddresssId" type="integer" readonly="true" required="true" step="0" widget="number" inputtype="number" placeholder="Enter value"></wm-form-field>
+                <wm-form-field name="userDetails" displayname="User Details" show="false" primary-key="false" generator="assigned" key="userDetails" type="list" is-related="true" readonly="false" required="true" widget="select" defaultvalue="bind:Variables.LV_UserDetails.firstRecord"
+                    dataset="bind:Variables.LV_UserDetails.dataSet" datafield="All Fields" displayfield="userId" placeholder="Select value"></wm-form-field>
+                <wm-form-action key="reset" display-name="Reset" show="true" class="form-reset btn-secondary" iconclass="wi wi-refresh" title="Reset" action="reset()" disabled="false" type="button" update-mode="true"></wm-form-action>
+                <wm-form-action key="save" display-name="Save" show="true" class="form-save btn-success" iconclass="wi wi-save" title="Save" disabled="false" type="submit" update-mode="true"></wm-form-action>
+            </wm-liveform>
+        </wm-dialog>
+    </wm-view>
+    <wm-view class="dialog-view" name="view2">
+        <wm-dialog dialogtype="design-dialog" title="Edit Address" iconclass="wi wi-edit" modal="true" name="formDialog_Editadd" showheader="true">
+            <wm-liveform novalidate="false" errormessage="" title="" defaultmode="Edit" dataset="bind:Variables.UserAddressDetailsData.dataSet" captionalign="left" captionposition="top" formdata="bind:Widgets.livelist_AddressDetails.selecteditem" name="liveform_EditAddress"
+                on-success="Widgets.formDialog_Editadd.close();Variables.UserAddressDetailsData.listRecords()">
+                <wm-layoutgrid columns="2" name="layoutgrid13_2">
+                    <wm-gridrow name="gridrow22_3">
+                        <wm-gridcolumn columnwidth="6" name="gridcolumn40_1">
+                            <wm-form-field name="address" displayname="Address" show="true" primary-key="false" generator="assigned" key="address" type="string" readonly="false" required="true" widget="text" maxchars="255" inputtype="text" placeholder="Enter value"></wm-form-field>
+                        </wm-gridcolumn>
+                        <wm-gridcolumn columnwidth="6" name="gridcolumn41_6">
+                            <wm-form-field name="city" displayname="City" show="true" primary-key="false" generator="assigned" key="city" type="string" readonly="false" required="true" widget="text" maxchars="255" inputtype="text" placeholder="Enter value"></wm-form-field>
+                        </wm-gridcolumn>
+                    </wm-gridrow>
+                    <wm-gridrow name="gridrow23_6">
+                        <wm-gridcolumn columnwidth="6" name="gridcolumn42_5">
+                            <wm-form-field name="state" displayname="State" show="true" primary-key="false" generator="assigned" key="state" type="string" readonly="false" required="true" widget="text" maxchars="255" inputtype="text" placeholder="Enter value"></wm-form-field>
+                        </wm-gridcolumn>
+                        <wm-gridcolumn columnwidth="6" name="gridcolumn43_2">
+                            <wm-form-field name="country" displayname="Country" show="true" primary-key="false" generator="assigned" key="country" type="string" readonly="false" required="true" widget="text" maxchars="255" inputtype="text" placeholder="Enter value"></wm-form-field>
+                        </wm-gridcolumn>
+                    </wm-gridrow>
+                    <wm-gridrow name="gridrow24">
+                        <wm-gridcolumn columnwidth="6" name="gridcolumn44_1">
+                            <wm-form-field name="pincode" displayname="Pincode" show="true" primary-key="false" generator="assigned" key="pincode" type="integer" readonly="false" required="true" step="0" widget="number" inputtype="number" placeholder="Enter value"></wm-form-field>
+                        </wm-gridcolumn>
+                    </wm-gridrow>
+                </wm-layoutgrid>
+                <wm-form-field name="userAddresssId" displayname="User Addresss Id" show="false" primary-key="true" generator="identity" key="userAddresssId" type="integer" readonly="true" required="true" step="0" widget="number" inputtype="number" placeholder="Enter value"></wm-form-field>
+                <wm-form-action key="reset" display-name="Reset" show="true" class="form-reset btn-secondary" iconclass="wi wi-refresh" title="Reset" action="reset()" disabled="false" type="button" update-mode="true"></wm-form-action>
+                <wm-form-action key="save" display-name="Save" show="true" class="form-save btn-success" iconclass="wi wi-save" title="Save" disabled="false" type="submit" update-mode="true"></wm-form-action>
+                <wm-form-action key="custom" display-name="Cancel" show="true" class="btn-danger" iconclass="wi wi-cancel" title="Cancel" action="Widgets.formDialog_Editadd.close()" shortcutkey="" disabled="false" type="button" update-mode="true"></wm-form-action>
+            </wm-liveform>
+        </wm-dialog>
+    </wm-view>
+</wm-page>

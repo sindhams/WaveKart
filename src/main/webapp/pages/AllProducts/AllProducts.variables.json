@@ -1,0 +1,21 @@
+{
+  "BreadCrmb_AllProducts" : {
+    "_id" : "wm-BreadCrmb_AllProducts-wm.Variable-1492408818185",
+    "name" : "BreadCrmb_AllProducts",
+    "owner" : "Page",
+    "category" : "wm.Variable",
+    "dataBinding" : [ ],
+    "dataSet" : [ {
+      "PageName" : "Home",
+      "Icon" : "glyphicon glyphicon-home",
+      "Link" : "#/Main"
+    }, {
+      "PageName" : "All Products",
+      "Icon" : "",
+      "Link" : "#/AllProducts"
+    } ],
+    "type" : "string",
+    "isList" : true,
+    "saveInPhonegap" : false
+  }
+}

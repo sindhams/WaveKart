@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <sql-query name="TotalItemsPrice_CartProd">
+        <![CDATA[
+        select sum(PRODUCT_QUANTITY) as Qty,sum(TOTAL_PRICE) as Price from CART_ITEMS where CART_ID=:cartId
+        ]]>
+    <query-param name="cartId" type="java.lang.Integer"/>
+    </sql-query>
+
+    <sql-query name="TotalItemsPrice_CartProd__count">
+        <![CDATA[
+        select count(*) from (select sum(PRODUCT_QUANTITY) as Qty,sum(TOTAL_PRICE) as Price from CART_ITEMS where CART_ID=:cartId) wmTempTable
+        ]]>
+    <query-param name="cartId" type="java.lang.Integer"/>
+    </sql-query>
+
+    <sql-query name="TotalItemsPrice_Orders">
+        <![CDATA[
+        select sum(PRODUCT_LINE_AMOUNT) as Price,sum(QUANTITY) as Qty from ORDER_LINE_ITEMS where ORDER_ID=:Oid
+        ]]>
+    <query-param name="Oid" type="java.lang.Integer"/>
+    </sql-query>
+
+    <sql-query name="TotalItemsPrice_Orders__count">
+        <![CDATA[
+        select count(*) from (select sum(PRODUCT_LINE_AMOUNT) as Price,sum(QUANTITY) as Qty from ORDER_LINE_ITEMS where ORDER_ID=:Oid) wmTempTable
+        ]]>
+    <query-param name="Oid" type="java.lang.Integer"/>
+    </sql-query>
+
+    <sql-query name="DeleteCartItems_LoggedUser">
+        <![CDATA[
+        delete from CART_ITEMS where CART_ID=:LoggedUserCartId
+        ]]>
+    <query-param name="LoggedUserCartId" type="java.lang.Integer"/>
+    </sql-query>
+
+    <sql-query name="Get_CartIdByUserid">
+        <![CDATA[
+        select CART_ID from CART_DETAILS where USER_ID=:SERVER__USER_ID__LoggedInUser
+        ]]>
+    <query-param name="SERVER__USER_ID__LoggedInUser" type="java.lang.String"/>
+    </sql-query>
+
+    <sql-query name="Get_CartIdByUserid__count">
+        <![CDATA[
+        select count(*) from (select CART_ID from CART_DETAILS where USER_ID=:SERVER__USER_ID__LoggedInUser) wmTempTable
+        ]]>
+    <query-param name="SERVER__USER_ID__LoggedInUser" type="java.lang.String"/>
+    </sql-query>
+
+    <sql-query name="MyCart_Items_Count">
+        <![CDATA[
+        select count(PRODUCT_ID) from CART_ITEMS CI,CART_DETAILS CD where CI.CART_ID=CD.CART_ID and CD.USER_ID=:SERVER__USER_ID__CURRENT_USER_ID
+        ]]>
+    <query-param name="SERVER__USER_ID__CURRENT_USER_ID" type="java.lang.String"/>
+    </sql-query>
+
+    <sql-query name="MyCart_Items_Count__count">
+        <![CDATA[
+        select count(*) from (select count(PRODUCT_ID) from CART_ITEMS CI,CART_DETAILS CD where CI.CART_ID=CD.CART_ID and CD.USER_ID=:SERVER__USER_ID__CURRENT_USER_ID) wmTempTable
+        ]]>
+    <query-param name="SERVER__USER_ID__CURRENT_USER_ID" type="java.lang.String"/>
+    </sql-query>
+
+    <sql-query name="QV_getInventoryDetails">
+        <![CDATA[
+        select QUANTITY from PRODUCT_INVENTORY where PRODUCT_ID in :productIds
+        ]]>
+    <query-param name="productIds" type="java.lang.Integer"/>
+    </sql-query>
+
+    <sql-query name="Get_CartItems_id">
+        <![CDATA[
+        select * from CART_ITEMS where CART_ID=:Cid
+        ]]>
+    <query-param name="Cid" type="java.lang.Integer"/>
+    </sql-query>
+
+    <sql-query name="Get_CartItems_id__count">
+        <![CDATA[
+        select count(*) from (select * from CART_ITEMS where CART_ID=:Cid) wmTempTable
+        ]]>
+    <query-param name="Cid" type="java.lang.Integer"/>
+    </sql-query>
+
+    <sql-query name="QV_UpdateQuantityFromPI">
+        <![CDATA[
+        update PRODUCT_INVENTORY set QUANTITY=(QUANTITY-:qty) where PRODUCT_ID=:productId
+        ]]>
+    <query-param name="qty" type="java.lang.Integer"/>
+    <query-param name="productId" type="java.lang.Integer"/>
+    </sql-query>
+</hibernate-mapping>

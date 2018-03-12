@@ -1,0 +1,13 @@
+<wm-partial data-ng-controller="ScrollType_footerPageController" type="footer" name="partial1"> 
+    <wm-layoutgrid height="auto" name="layoutgrid1"> 
+        <wm-gridrow name="gridrow1"> 
+            <wm-gridcolumn verticalalign="bottom" name="gridcolumn1"> 
+                <wm-label caption="Powered by WaveMaker" name="label1"></wm-label> 
+            </wm-gridcolumn> 
+            <wm-gridcolumn horizontalalign="right" verticalalign="bottom" name="gridcolumn2"> 
+                <wm-label caption="Copyright 2015" name="label2"></wm-label> 
+                <wm-button class="btn-rounded btn btn-primary scroll-top" caption="" type="button" margin="-4em 0.5em unset 0.5em" name="scrollTop" iconclass="wi wi-chevron-up fa-lg" on-click="scrollTopClick($event, $scope)" width="3em" height="3em"></wm-button> 
+            </wm-gridcolumn> 
+        </wm-gridrow> 
+    </wm-layoutgrid> 
+</wm-partial>

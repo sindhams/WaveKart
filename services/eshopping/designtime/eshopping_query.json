@@ -1,0 +1,349 @@
+{
+  "DeleteCartItems_LoggedUser" : {
+    "name" : "DeleteCartItems_LoggedUser",
+    "description" : "delete cart item of the user after checkout",
+    "version" : "V1",
+    "queryString" : "delete from CART_ITEMS where CART_ID=:LoggedUserCartId",
+    "countQueryString" : null,
+    "nativeSql" : true,
+    "fetchCount" : false,
+    "type" : "DELETE",
+    "parameters" : [ {
+      "name" : "LoggedUserCartId",
+      "type" : "integer",
+      "list" : false,
+      "variableType" : "PROMPT",
+      "testValue" : "2",
+      "required" : false
+    } ],
+    "request" : {
+      "wrapped" : false,
+      "typeRef" : null,
+      "method" : "DELETE"
+    },
+    "response" : {
+      "typeRef" : "java.lang.Integer",
+      "returns" : "PRIMITIVE",
+      "responseType" : "SINGLE"
+    }
+  },
+  "Get_CartIdByUserid" : {
+    "name" : "Get_CartIdByUserid",
+    "description" : "Get Cart id by logged in user id",
+    "version" : "V1",
+    "queryString" : "select CART_ID from CART_DETAILS where USER_ID=:LoggedInUser",
+    "countQueryString" : "select count(*) from (select CART_ID from CART_DETAILS where USER_ID=:LoggedInUser) wmTempTable",
+    "nativeSql" : true,
+    "fetchCount" : true,
+    "type" : "SELECT",
+    "parameters" : [ {
+      "name" : "LoggedInUser",
+      "type" : "string",
+      "list" : false,
+      "variableType" : "SERVER",
+      "variableName" : "USER_ID",
+      "testValue" : "1",
+      "required" : false
+    } ],
+    "request" : {
+      "wrapped" : false,
+      "typeRef" : null,
+      "method" : "GET"
+    },
+    "response" : {
+      "typeRef" : "com.wavemaker.sampleapps.wavekart.eshopping.models.query.GetCartIdByUseridResponse",
+      "returns" : "CUSTOM",
+      "responseType" : "PAGINATED",
+      "properties" : [ {
+        "name" : "CART_ID",
+        "fieldName" : "cartId",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.lang.Integer",
+          "list" : false
+        }
+      } ]
+    }
+  },
+  "Get_CartItems_id" : {
+    "name" : "Get_CartItems_id",
+    "description" : "Get cart items by cart id. This is used to insert the updated values into the orders",
+    "version" : "V1",
+    "queryString" : "select * from CART_ITEMS where CART_ID=:Cid",
+    "countQueryString" : "select count(*) from (select * from CART_ITEMS where CART_ID=:Cid) wmTempTable",
+    "nativeSql" : true,
+    "fetchCount" : true,
+    "type" : "SELECT",
+    "parameters" : [ {
+      "name" : "Cid",
+      "type" : "integer",
+      "list" : false,
+      "variableType" : "PROMPT",
+      "testValue" : "1",
+      "required" : false
+    } ],
+    "request" : {
+      "wrapped" : false,
+      "typeRef" : null,
+      "method" : "GET"
+    },
+    "response" : {
+      "typeRef" : "com.wavemaker.sampleapps.wavekart.eshopping.models.query.GetCartItemsIdResponse",
+      "returns" : "CUSTOM",
+      "responseType" : "PAGINATED",
+      "properties" : [ {
+        "name" : "CART_ID",
+        "fieldName" : "cartId",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.lang.Integer",
+          "list" : false
+        }
+      }, {
+        "name" : "CURRENT_PRICE",
+        "fieldName" : "currentPrice",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.lang.Double",
+          "list" : false
+        }
+      }, {
+        "name" : "PRODUCT_ID",
+        "fieldName" : "productId",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.lang.Integer",
+          "list" : false
+        }
+      }, {
+        "name" : "PRODUCT_QUANTITY",
+        "fieldName" : "productQuantity",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.lang.Integer",
+          "list" : false
+        }
+      }, {
+        "name" : "TOTAL_PRICE",
+        "fieldName" : "totalPrice",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.lang.Double",
+          "list" : false
+        }
+      } ]
+    }
+  },
+  "MyCart_Items_Count" : {
+    "name" : "MyCart_Items_Count",
+    "description" : "Count items in the user cart",
+    "version" : "V1",
+    "queryString" : "select count(PRODUCT_ID) from CART_ITEMS CI,CART_DETAILS CD where CI.CART_ID=CD.CART_ID and CD.USER_ID=:CURRENT_USER_ID",
+    "countQueryString" : "select count(*) from (select count(PRODUCT_ID) from CART_ITEMS CI,CART_DETAILS CD where CI.CART_ID=CD.CART_ID and CD.USER_ID=:CURRENT_USER_ID) wmTempTable",
+    "nativeSql" : true,
+    "fetchCount" : true,
+    "type" : "SELECT",
+    "parameters" : [ {
+      "name" : "CURRENT_USER_ID",
+      "type" : "string",
+      "list" : false,
+      "variableType" : "SERVER",
+      "variableName" : "USER_ID",
+      "testValue" : "1",
+      "required" : false
+    } ],
+    "request" : {
+      "wrapped" : false,
+      "typeRef" : null,
+      "method" : "GET"
+    },
+    "response" : {
+      "typeRef" : "com.wavemaker.sampleapps.wavekart.eshopping.models.query.MyCartItemsCountResponse",
+      "returns" : "CUSTOM",
+      "responseType" : "PAGINATED",
+      "properties" : [ {
+        "name" : "C1",
+        "fieldName" : "c1",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.math.BigInteger",
+          "list" : false
+        }
+      } ]
+    }
+  },
+  "QV_UpdateQuantityFromPI" : {
+    "name" : "QV_UpdateQuantityFromPI",
+    "description" : "Update quantity when the order is placed.",
+    "version" : "V2",
+    "queryString" : "update PRODUCT_INVENTORY set QUANTITY=(QUANTITY-:qty) where PRODUCT_ID=:productId",
+    "countQueryString" : null,
+    "nativeSql" : true,
+    "fetchCount" : false,
+    "type" : "UPDATE",
+    "parameters" : [ {
+      "name" : "qty",
+      "type" : "integer",
+      "list" : false,
+      "variableType" : "PROMPT",
+      "testValue" : "1",
+      "required" : true
+    }, {
+      "name" : "productId",
+      "type" : "integer",
+      "list" : false,
+      "variableType" : "PROMPT",
+      "testValue" : "50",
+      "required" : true
+    } ],
+    "request" : {
+      "wrapped" : true,
+      "typeRef" : "com.wavemaker.sampleapps.wavekart.eshopping.models.query.QvUpdateQuantityFromPiRequest",
+      "method" : "PUT"
+    },
+    "response" : {
+      "typeRef" : "java.lang.Integer",
+      "returns" : "ENTITY",
+      "responseType" : "SINGLE"
+    }
+  },
+  "QV_getInventoryDetails" : {
+    "name" : "QV_getInventoryDetails",
+    "description" : "Get product inventory details for given product id",
+    "version" : "V2",
+    "queryString" : "select QUANTITY from PRODUCT_INVENTORY where PRODUCT_ID in :productIds",
+    "countQueryString" : null,
+    "nativeSql" : true,
+    "fetchCount" : false,
+    "type" : "SELECT",
+    "parameters" : [ {
+      "name" : "productIds",
+      "type" : "integer",
+      "list" : true,
+      "variableType" : "PROMPT",
+      "testValue" : [ "1", "2", "3" ],
+      "required" : true
+    } ],
+    "request" : {
+      "wrapped" : false,
+      "typeRef" : null,
+      "method" : "GET"
+    },
+    "response" : {
+      "typeRef" : "com.wavemaker.sampleapps.wavekart.eshopping.models.query.QvGetInventoryDetailsResponse",
+      "returns" : "CUSTOM",
+      "responseType" : "PAGINATED",
+      "properties" : [ {
+        "name" : "QUANTITY",
+        "fieldName" : "quantity",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.math.BigInteger",
+          "list" : false
+        }
+      } ]
+    }
+  },
+  "TotalItemsPrice_CartProd" : {
+    "name" : "TotalItemsPrice_CartProd",
+    "description" : "total items in cart of logged in user",
+    "version" : "V1",
+    "queryString" : "select sum(PRODUCT_QUANTITY) as Qty,sum(TOTAL_PRICE) as Price from CART_ITEMS where CART_ID=:cartId",
+    "countQueryString" : "select count(*) from (select sum(PRODUCT_QUANTITY) as Qty,sum(TOTAL_PRICE) as Price from CART_ITEMS where CART_ID=:cartId) wmTempTable",
+    "nativeSql" : true,
+    "fetchCount" : true,
+    "type" : "SELECT",
+    "parameters" : [ {
+      "name" : "cartId",
+      "type" : "integer",
+      "list" : false,
+      "variableType" : "PROMPT",
+      "testValue" : "1",
+      "required" : false
+    } ],
+    "request" : {
+      "wrapped" : false,
+      "typeRef" : null,
+      "method" : "GET"
+    },
+    "response" : {
+      "typeRef" : "com.wavemaker.sampleapps.wavekart.eshopping.models.query.TotalItemsPriceCartProdResponse",
+      "returns" : "CUSTOM",
+      "responseType" : "PAGINATED",
+      "properties" : [ {
+        "name" : "PRICE",
+        "fieldName" : "price",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.lang.Double",
+          "list" : false
+        }
+      }, {
+        "name" : "QTY",
+        "fieldName" : "qty",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.math.BigInteger",
+          "list" : false
+        }
+      } ]
+    }
+  },
+  "TotalItemsPrice_Orders" : {
+    "name" : "TotalItemsPrice_Orders",
+    "description" : "sum of price and quantity of orderd products",
+    "version" : "V1",
+    "queryString" : "select sum(PRODUCT_LINE_AMOUNT) as Price,sum(QUANTITY) as Qty from ORDER_LINE_ITEMS where ORDER_ID=:Oid",
+    "countQueryString" : "select count(*) from (select sum(PRODUCT_LINE_AMOUNT) as Price,sum(QUANTITY) as Qty from ORDER_LINE_ITEMS where ORDER_ID=:Oid) wmTempTable",
+    "nativeSql" : true,
+    "fetchCount" : true,
+    "type" : "SELECT",
+    "parameters" : [ {
+      "name" : "Oid",
+      "type" : "integer",
+      "list" : false,
+      "variableType" : "PROMPT",
+      "testValue" : "50",
+      "required" : false
+    } ],
+    "request" : {
+      "wrapped" : false,
+      "typeRef" : null,
+      "method" : "GET"
+    },
+    "response" : {
+      "typeRef" : "com.wavemaker.sampleapps.wavekart.eshopping.models.query.TotalItemsPriceOrdersResponse",
+      "returns" : "CUSTOM",
+      "responseType" : "PAGINATED",
+      "properties" : [ {
+        "name" : "PRICE",
+        "fieldName" : "price",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.math.BigDecimal",
+          "list" : false
+        }
+      }, {
+        "name" : "QTY",
+        "fieldName" : "qty",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.math.BigInteger",
+          "list" : false
+        }
+      } ]
+    }
+  }
+}

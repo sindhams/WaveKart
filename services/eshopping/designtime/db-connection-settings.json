@@ -1,0 +1,55 @@
+{
+  "username" : "sa",
+  "password" : "7b6a43524a78700d662158",
+  "url" : "jdbc:hsqldb:file:{WebAppRoot}/WEB-INF/data/eshopping;shutdown=true;hsqldb.lock_file=false;",
+  "driverClass" : "org.hsqldb.jdbcDriver",
+  "dialect" : "org.hibernate.dialect.HSQLDialect",
+  "serviceId" : "eshopping",
+  "packageName" : "com.wavemaker.sampleapps.wavekart.eshopping",
+  "dbType" : "HSQLDB",
+  "host" : null,
+  "dbName" : "eshopping",
+  "port" : "",
+  "schemaName" : "PUBLIC",
+  "tableFilter" : [ {
+    "table" : "CART_DETAILS",
+    "schema" : "PUBLIC"
+  }, {
+    "table" : "CART_ITEMS",
+    "schema" : "PUBLIC"
+  }, {
+    "table" : "ORDER_LINE_ITEMS",
+    "schema" : "PUBLIC"
+  }, {
+    "table" : "ORDERS",
+    "schema" : "PUBLIC"
+  }, {
+    "table" : "PRODUCT_DETAILS",
+    "schema" : "PUBLIC"
+  }, {
+    "table" : "PRODUCT_INVENTORY",
+    "schema" : "PUBLIC"
+  }, {
+    "table" : "USER_ADDRESS_DETAILS",
+    "schema" : "PUBLIC"
+  }, {
+    "table" : "USER_DETAILS",
+    "schema" : "PUBLIC"
+  } ],
+  "schemaFilter" : [ "PUBLIC" ],
+  "impersonateUser" : false,
+  "activeDirectoryDomain" : null,
+  "hbm2ddl" : "none",
+  "maxPageSize" : 100,
+  "minPoolSize" : 2,
+  "maxPoolSize" : 4,
+  "transactionTimeout" : 30,
+  "dataSourceType" : "WM_MANAGED_DATASOURCE",
+  "jndiName" : "",
+  "reloadInfo" : {
+    "reload" : true,
+    "reason" : "MIGRATION_FAILED",
+    "message" : "Source code re-generation needed with respect to cascade types support."
+  },
+  "readOnly" : true
+}

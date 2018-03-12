@@ -1,0 +1,96 @@
+<wm-page data-ng-controller="MyCartPageController" pagetitle="My Cart" name="page1"> 
+    <wm-header content="header" name="header1"></wm-header> 
+    <wm-top-nav content="topnav" name="top_nav1"></wm-top-nav> 
+    <wm-content name="content1"> 
+        <wm-page-content columnwidth="12" name="page_content1"> 
+            <wm-layoutgrid name="layoutgrid"> 
+                <wm-gridrow name="gridrow14"> 
+                    <wm-gridcolumn columnwidth="9" name="gridcolumn26"></wm-gridcolumn> 
+                    <wm-gridcolumn columnwidth="3" name="gridcolumn27" horizontalalign="right" padding="unset unset 1em unset"> 
+                        <wm-button class="btn-warning" caption="continue shopping" type="button" fontsize="12" iconclass="wi wi-angle-double-left" on-click="Variables.goToPage_AllProducts.invoke()" name="button6" iconposition="left"></wm-button> 
+                    </wm-gridcolumn> 
+                </wm-gridrow> 
+                <wm-gridrow name="gridrow2_1"> 
+                    <wm-gridcolumn columnwidth="9" name="gridcolumn5_1"> 
+                        <wm-layoutgrid name="layoutgrid3"> 
+                            <wm-gridrow name="gridrow4"> 
+                                <wm-gridcolumn columnwidth="12" name="gridcolumn9"> 
+                                    <wm-list listclass="list-group" template="true" itemsperrow="xs-1 sm-1 md-1 lg-1" class="list-card" dataset="bind:Variables.Cart_Data.dataSet" navigation="Scroll" name="Cart_Details" navigationalign="center" nodatamessage="No items in your cart"> 
+                                        <wm-listtemplate layout="media" name="listtemplate1"> 
+                                            <wm-card name="Pic_CartList" title=""> 
+                                                <wm-card-content name="card_content_CartList"> 
+                                                    <wm-layoutgrid name="layoutgrid_CartList"> 
+                                                        <wm-gridrow name="gridrow10"> 
+                                                            <wm-gridcolumn columnwidth="4" name="gridcolumn20" class="col-sm-4 hidden-xs"></wm-gridcolumn> 
+                                                            <wm-gridcolumn columnwidth="4" name="gridcolumn21" class="hidden-sm hidden-xs"> 
+                                                                <wm-label padding="unset 0.5em" name="lbl_desc" caption="Description" fontunit="em"></wm-label> 
+                                                            </wm-gridcolumn> 
+                                                            <wm-gridcolumn columnwidth="2" name="gridcolumn22" horizontalalign="left" class="hidden-sm hidden-xs"> 
+                                                                <wm-label padding="unset unset unset .7em" name="lbl_Qty" caption="Qty" fontunit="em"></wm-label> 
+                                                            </wm-gridcolumn> 
+                                                            <wm-gridcolumn columnwidth="1" name="gridcolumn23" class="hidden-sm hidden-xs" padding="unset unset unset 1em"> 
+                                                                <wm-label caption="Price" name="lbl_Price" fontunit="em"></wm-label> 
+                                                            </wm-gridcolumn> 
+                                                            <wm-gridcolumn columnwidth="1" name="gridcolumn24"></wm-gridcolumn> 
+                                                        </wm-gridrow> 
+                                                        <wm-gridrow name="gridrow2"> 
+                                                            <wm-gridcolumn columnwidth="4" name="gridcolumn4" horizontalalign="center" class="col-sm-4 col-xs-4"> 
+                                                                <wm-picture name="picture_CartList" picturesource="bind:&quot;http://wmstudio-apps.s3.amazonaws.com/eshop/Products/Thumbnails&quot;+Variables.Cart_Data.dataSet.data[$i].productDetails.imageUrl" height="5em"></wm-picture> 
+                                                            </wm-gridcolumn> 
+                                                            <wm-gridcolumn columnwidth="4" name="gridcolumn5" padding="1em unset unset unset" class="col-sm-4 col-xs-3"> 
+                                                                <wm-label name="Name" class="p" caption="bind:Variables.Cart_Data.dataSet.data[$i].productDetails.productName" fontunit="em" fontweight="bold"></wm-label> 
+                                                            </wm-gridcolumn> 
+                                                            <wm-gridcolumn columnwidth="2" name="gridcolumn6" horizontalalign="left" class="col-sm-2 col-xs-2"> 
+                                                                <wm-select name="select_Qty" width="55px" datavalue="bind:Variables.Cart_Data.dataSet.data[$i].productQuantity" dataset="1,2,3" on-change="Variables.LV_Update_CartInfo.updateRecord()"></wm-select> 
+                                                            </wm-gridcolumn> 
+                                                            <wm-gridcolumn columnwidth="1" name="gridcolumn16_1" padding="1em unset unset 1em" class="col-sm-1 col-xs-2"> 
+                                                                <wm-label padding="unset unset unset .5px" name="label9_1" caption="bind:Variables.Format_Price.dataSet.dataValue" fontweight="bold" fontsize="1.1" fontunit="em"></wm-label> 
+                                                                <wm-label padding="unset 0.5em unset unset" name="Price" caption="bind:(item.productDetails.price)*(Widgets.Cart_Details.currentItemWidgets.select_Qty.datavalue)" fontweight="bold" fontunit="em" width="70%" textalign="left"></wm-label> 
+                                                            </wm-gridcolumn> 
+                                                            <wm-gridcolumn columnwidth="1" name="gridcolumn6_1" horizontalalign="left" class="col-sm-1 col-xs-1"> 
+                                                                <wm-button class="btn-transparent" caption="" type="button" margin="0.7em unset unset unset" name="Remove_Prod" iconclass="glyphicon glyphicon-remove" width="30px" height="30px" on-click="Variables.ProdDeleteConfirmation.invoke()" hint="Remove Product"></wm-button> 
+                                                            </wm-gridcolumn> 
+                                                        </wm-gridrow> 
+                                                    </wm-layoutgrid> 
+                                                </wm-card-content> 
+                                            </wm-card> 
+                                        </wm-listtemplate> 
+                                    </wm-list> 
+                                </wm-gridcolumn> 
+                            </wm-gridrow> 
+                        </wm-layoutgrid> 
+                    </wm-gridcolumn> 
+                    <wm-gridcolumn columnwidth="3" name="gridcolumn6_2" padding="unset .5em"> 
+                        <wm-container name="container1" class="panel panel-default col-md-offset-1" padding="1em" bordercolor="rgba(0,0,0,0.1)" borderstyle="solid" borderwidth="1px" show="bind:Variables.Cart_Data.dataSet.data.length>0"> 
+                            <wm-layoutgrid name="layoutgrid6"> 
+                                <wm-gridrow name="gridrow10_2"> 
+                                    <wm-gridcolumn columnwidth="12" horizontalalign="left" name="gridcolumn21_2" padding="unset unset unset 1em"> 
+                                        <wm-label caption="Total Items :" fontunit="em" textalign="left" name="label13" width="86"></wm-label> 
+                                        <wm-label caption="bind:(Variables.SV_TotalItemsPriceOfCartProd.dataSet[$i].QTY|| 0)" fontsize="1.2" fontunit="em" textalign="left" name="label11" fontweight="bold" margin="unset unset unset 1em"></wm-label> 
+                                    </wm-gridcolumn> 
+                                </wm-gridrow> 
+                                <wm-gridrow name="gridrow11"> 
+                                    <wm-gridcolumn columnwidth="12" horizontalalign="left" name="gridcolumn22_1" padding="unset unset 1em 1em"> 
+                                        <wm-container name="container2" show="bind:Widgets.label11.caption==0?false:true"> 
+                                            <wm-label caption="Total Amount :" fontunit="em" textalign="left" name="label14" width="86"></wm-label> 
+                                            <wm-label caption="bind:(Variables.Format_Price.dataSet.dataValue+Variables.SV_TotalItemsPriceOfCartProd.dataSet[$i].PRICE)||0" fontsize="1.2" fontunit="em" textalign="left" show="true" name="label12" fontweight="bold" margin="unset unset unset 1em"></wm-label> 
+                                        </wm-container> 
+                                    </wm-gridcolumn> 
+                                </wm-gridrow> 
+                                <wm-gridrow name="gridrow12"> 
+                                    <wm-gridcolumn columnwidth="12" name="gridcolumn24_1" horizontalalign="center" padding="1em unset unset unset" class="bordered-top"> 
+                                        <wm-button class="btn-success" caption="Place Order" type="button" iconclass="" fontsize="12" color="#ffffff" horizontalalign="center" on-click="Variables.goToPage_PaymentProcess.invoke()" disabled="bind:Widgets.Total_Items.caption=='Total Items : 0'?true:false" name="button5" iconposition="right"></wm-button> 
+                                    </wm-gridcolumn> 
+                                </wm-gridrow> 
+                            </wm-layoutgrid> 
+                        </wm-container> 
+                    </wm-gridcolumn> 
+                </wm-gridrow> 
+            </wm-layoutgrid> 
+        </wm-page-content> 
+    </wm-content> 
+    <wm-footer content="footer" name="footer1"></wm-footer> 
+    <wm-view class="dialog-view" name="view1"> 
+        <wm-confirmdialog name="notificationconfirmdialog" controller="NotificationDialogController" notificationdialog="confirm" message="{{notification.text}}" title="{{notification.title}}" oktext="{{notification.okButtonText}}" canceltext="{{notification.cancelButtonText}}" on-ok="variableOnOk()" on-cancel="variableOnCancel()" on-close="variableOnClose()"></wm-confirmdialog> 
+    </wm-view> 
+</wm-page>
