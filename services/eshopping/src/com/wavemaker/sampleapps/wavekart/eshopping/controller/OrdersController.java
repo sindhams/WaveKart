@@ -53,9 +53,9 @@ public class OrdersController {
 	private OrdersService ordersService;
 
 	@ApiOperation(value = "Creates a new Orders instance.")
-@RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     @WMAccessVisibility(value = AccessSpecifier.APP_ONLY)
-public Orders createOrders(@RequestBody Orders orders) {
+    public Orders createOrders(@RequestBody Orders orders) {
 		LOGGER.debug("Create Orders with information: {}" , orders);
 
 		orders = ordersService.create(orders);

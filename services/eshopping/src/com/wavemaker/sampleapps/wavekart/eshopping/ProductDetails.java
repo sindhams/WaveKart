@@ -19,7 +19,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PostPersist;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -97,7 +100,7 @@ public class ProductDetails implements Serializable {
         this.price = price;
     }
 
-    @OneToOne(fetch = FetchType.EAGER, mappedBy = "productDetails")
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy = "productDetails")
     public ProductInventory getProductInventory() {
         return this.productInventory;
     }
@@ -107,7 +110,8 @@ public class ProductDetails implements Serializable {
     }
 
     @JsonInclude(Include.NON_EMPTY)
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "productDetails")
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy = "productDetails")
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     public List<CartItems> getCartItemses() {
         return this.cartItemses;
     }
@@ -117,13 +121,31 @@ public class ProductDetails implements Serializable {
     }
 
     @JsonInclude(Include.NON_EMPTY)
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "productDetails")
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy = "productDetails")
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     public List<OrderLineItems> getOrderLineItemses() {
         return this.orderLineItemses;
     }
 
     public void setOrderLineItemses(List<OrderLineItems> orderLineItemses) {
         this.orderLineItemses = orderLineItemses;
+    }
+
+    @PostPersist
+    public void onPostPersist() {
+        if(productInventory != null) {
+            productInventory.setProductDetails(this);
+        }
+        if(cartItemses != null) {
+            for(CartItems cartItems : cartItemses) {
+                cartItems.setProductDetails(this);
+            }
+        }
+        if(orderLineItemses != null) {
+            for(OrderLineItems orderLineItems : orderLineItemses) {
+                orderLineItems.setProductDetails(this);
+            }
+        }
     }
 
     @Override

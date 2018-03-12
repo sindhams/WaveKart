@@ -20,7 +20,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PostPersist;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -108,7 +111,8 @@ public class UserAddressDetails implements Serializable {
     }
 
     @JsonInclude(Include.NON_EMPTY)
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "userAddressDetails")
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy = "userAddressDetails")
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     public List<Orders> getOrderses() {
         return this.orderses;
     }
@@ -129,6 +133,15 @@ public class UserAddressDetails implements Serializable {
         }
 
         this.userDetails = userDetails;
+    }
+
+    @PostPersist
+    public void onPostPersist() {
+        if(orderses != null) {
+            for(Orders orders : orderses) {
+                orders.setUserAddressDetails(this);
+            }
+        }
     }
 
     @Override

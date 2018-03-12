@@ -28,7 +28,6 @@ import com.wavemaker.runtime.file.model.Downloadable;
 import com.wavemaker.sampleapps.wavekart.eshopping.CartItems;
 import com.wavemaker.sampleapps.wavekart.eshopping.OrderLineItems;
 import com.wavemaker.sampleapps.wavekart.eshopping.ProductDetails;
-import com.wavemaker.sampleapps.wavekart.eshopping.ProductInventory;
 
 
 /**
@@ -69,30 +68,7 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
     @Override
 	public ProductDetails create(ProductDetails productDetails) {
         LOGGER.debug("Creating a new ProductDetails with information: {}", productDetails);
-        ProductDetails productDetailsCreated = this.wmGenericDao.create(productDetails);
-        if(productDetailsCreated.getProductInventory() != null) {
-            ProductInventory productInventory = productDetailsCreated.getProductInventory();
-            LOGGER.debug("Creating a new child ProductInventory with information: {}", productInventory);
-            productInventory.setProductDetails(productDetailsCreated);
-            productInventoryService.create(productInventory);
-        }
-
-        if(productDetailsCreated.getCartItemses() != null) {
-            for(CartItems cartItemse : productDetailsCreated.getCartItemses()) {
-                cartItemse.setProductDetails(productDetailsCreated);
-                LOGGER.debug("Creating a new child CartItems with information: {}", cartItemse);
-                cartItemsService.create(cartItemse);
-            }
-        }
-
-        if(productDetailsCreated.getOrderLineItemses() != null) {
-            for(OrderLineItems orderLineItemse : productDetailsCreated.getOrderLineItemses()) {
-                orderLineItemse.setProductDetails(productDetailsCreated);
-                LOGGER.debug("Creating a new child OrderLineItems with information: {}", orderLineItemse);
-                orderLineItemsService.create(orderLineItemse);
-            }
-        }
-        return productDetailsCreated;
+        return this.wmGenericDao.create(productDetails);
     }
 
 	@Transactional(readOnly = true, value = "eshoppingTransactionManager")
@@ -119,6 +95,21 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
 	@Override
 	public ProductDetails update(ProductDetails productDetails) throws EntityNotFoundException {
         LOGGER.debug("Updating ProductDetails with information: {}", productDetails);
+
+        if(productDetails.getProductInventory() != null) {
+            productDetails.getProductInventory().setProductDetails(productDetails);
+        }
+        if(productDetails.getCartItemses() != null) {
+            for(CartItems _cartItems : productDetails.getCartItemses()) {
+                _cartItems.setProductDetails(productDetails);
+            }
+        }
+        if(productDetails.getOrderLineItemses() != null) {
+            for(OrderLineItems _orderLineItems : productDetails.getOrderLineItemses()) {
+                _orderLineItems.setProductDetails(productDetails);
+            }
+        }
+
         this.wmGenericDao.update(productDetails);
 
         Integer productdetailsId = productDetails.getProductId();

@@ -22,7 +22,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PostPersist;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -42,8 +45,8 @@ public class Orders implements Serializable {
     private Timestamp orderDate;
     private String status;
     private List<OrderLineItems> orderLineItemses;
-    private UserDetails userDetails;
     private UserAddressDetails userAddressDetails;
+    private UserDetails userDetails;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -111,13 +114,28 @@ public class Orders implements Serializable {
     }
 
     @JsonInclude(Include.NON_EMPTY)
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "orders")
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy = "orders")
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     public List<OrderLineItems> getOrderLineItemses() {
         return this.orderLineItemses;
     }
 
     public void setOrderLineItemses(List<OrderLineItems> orderLineItemses) {
         this.orderLineItemses = orderLineItemses;
+    }
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "`USER_ADDRESS_ID`", referencedColumnName = "`USER_ADDRESSS_ID`", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "`SYS_FK_10181`"))
+    public UserAddressDetails getUserAddressDetails() {
+        return this.userAddressDetails;
+    }
+
+    public void setUserAddressDetails(UserAddressDetails userAddressDetails) {
+        if(userAddressDetails != null) {
+            this.userAddressId = userAddressDetails.getUserAddresssId();
+        }
+
+        this.userAddressDetails = userAddressDetails;
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -134,18 +152,13 @@ public class Orders implements Serializable {
         this.userDetails = userDetails;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "`USER_ADDRESS_ID`", referencedColumnName = "`USER_ADDRESSS_ID`", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "`SYS_FK_10181`"))
-    public UserAddressDetails getUserAddressDetails() {
-        return this.userAddressDetails;
-    }
-
-    public void setUserAddressDetails(UserAddressDetails userAddressDetails) {
-        if(userAddressDetails != null) {
-            this.userAddressId = userAddressDetails.getUserAddresssId();
+    @PostPersist
+    public void onPostPersist() {
+        if(orderLineItemses != null) {
+            for(OrderLineItems orderLineItems : orderLineItemses) {
+                orderLineItems.setOrders(this);
+            }
         }
-
-        this.userAddressDetails = userAddressDetails;
     }
 
     @Override

@@ -58,15 +58,7 @@ public class CartDetailsServiceImpl implements CartDetailsService {
     @Override
 	public CartDetails create(CartDetails cartDetails) {
         LOGGER.debug("Creating a new CartDetails with information: {}", cartDetails);
-        CartDetails cartDetailsCreated = this.wmGenericDao.create(cartDetails);
-        if(cartDetailsCreated.getCartItemses() != null) {
-            for(CartItems cartItemse : cartDetailsCreated.getCartItemses()) {
-                cartItemse.setCartDetails(cartDetailsCreated);
-                LOGGER.debug("Creating a new child CartItems with information: {}", cartItemse);
-                cartItemsService.create(cartItemse);
-            }
-        }
-        return cartDetailsCreated;
+        return this.wmGenericDao.create(cartDetails);
     }
 
 	@Transactional(readOnly = true, value = "eshoppingTransactionManager")
@@ -109,6 +101,13 @@ public class CartDetailsServiceImpl implements CartDetailsService {
 	@Override
 	public CartDetails update(CartDetails cartDetails) throws EntityNotFoundException {
         LOGGER.debug("Updating CartDetails with information: {}", cartDetails);
+
+        if(cartDetails.getCartItemses() != null) {
+            for(CartItems _cartItems : cartDetails.getCartItemses()) {
+                _cartItems.setCartDetails(cartDetails);
+            }
+        }
+
         this.wmGenericDao.update(cartDetails);
 
         Integer cartdetailsId = cartDetails.getCartId();

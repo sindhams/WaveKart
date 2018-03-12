@@ -54,9 +54,9 @@ public class ProductDetailsController {
 	private ProductDetailsService productDetailsService;
 
 	@ApiOperation(value = "Creates a new ProductDetails instance.")
-@RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     @WMAccessVisibility(value = AccessSpecifier.APP_ONLY)
-public ProductDetails createProductDetails(@RequestBody ProductDetails productDetails) {
+    public ProductDetails createProductDetails(@RequestBody ProductDetails productDetails) {
 		LOGGER.debug("Create ProductDetails with information: {}" , productDetails);
 
 		productDetails = productDetailsService.create(productDetails);

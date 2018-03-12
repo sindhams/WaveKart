@@ -51,8 +51,7 @@ public class ProductInventoryServiceImpl implements ProductInventoryService {
     @Override
 	public ProductInventory create(ProductInventory productInventory) {
         LOGGER.debug("Creating a new ProductInventory with information: {}", productInventory);
-        ProductInventory productInventoryCreated = this.wmGenericDao.create(productInventory);
-        return productInventoryCreated;
+        return this.wmGenericDao.create(productInventory);
     }
 
 	@Transactional(readOnly = true, value = "eshoppingTransactionManager")
@@ -79,6 +78,8 @@ public class ProductInventoryServiceImpl implements ProductInventoryService {
 	@Override
 	public ProductInventory update(ProductInventory productInventory) throws EntityNotFoundException {
         LOGGER.debug("Updating ProductInventory with information: {}", productInventory);
+
+
         this.wmGenericDao.update(productInventory);
 
         Integer productinventoryId = productInventory.getProductId();

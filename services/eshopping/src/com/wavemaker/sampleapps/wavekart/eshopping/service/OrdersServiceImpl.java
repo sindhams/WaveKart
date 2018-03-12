@@ -57,15 +57,7 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
 	public Orders create(Orders orders) {
         LOGGER.debug("Creating a new Orders with information: {}", orders);
-        Orders ordersCreated = this.wmGenericDao.create(orders);
-        if(ordersCreated.getOrderLineItemses() != null) {
-            for(OrderLineItems orderLineItemse : ordersCreated.getOrderLineItemses()) {
-                orderLineItemse.setOrders(ordersCreated);
-                LOGGER.debug("Creating a new child OrderLineItems with information: {}", orderLineItemse);
-                orderLineItemsService.create(orderLineItemse);
-            }
-        }
-        return ordersCreated;
+        return this.wmGenericDao.create(orders);
     }
 
 	@Transactional(readOnly = true, value = "eshoppingTransactionManager")
@@ -92,6 +84,13 @@ public class OrdersServiceImpl implements OrdersService {
 	@Override
 	public Orders update(Orders orders) throws EntityNotFoundException {
         LOGGER.debug("Updating Orders with information: {}", orders);
+
+        if(orders.getOrderLineItemses() != null) {
+            for(OrderLineItems _orderLineItems : orders.getOrderLineItemses()) {
+                _orderLineItems.setOrders(orders);
+            }
+        }
+
         this.wmGenericDao.update(orders);
 
         Integer ordersId = orders.getOrderId();

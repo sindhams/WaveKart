@@ -52,8 +52,7 @@ public class CartItemsServiceImpl implements CartItemsService {
     @Override
 	public CartItems create(CartItems cartItems) {
         LOGGER.debug("Creating a new CartItems with information: {}", cartItems);
-        CartItems cartItemsCreated = this.wmGenericDao.create(cartItems);
-        return cartItemsCreated;
+        return this.wmGenericDao.create(cartItems);
     }
 
 	@Transactional(readOnly = true, value = "eshoppingTransactionManager")
@@ -80,6 +79,8 @@ public class CartItemsServiceImpl implements CartItemsService {
 	@Override
 	public CartItems update(CartItems cartItems) throws EntityNotFoundException {
         LOGGER.debug("Updating CartItems with information: {}", cartItems);
+
+
         this.wmGenericDao.update(cartItems);
 
         CartItemsId cartitemsId = new CartItemsId();

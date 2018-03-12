@@ -53,9 +53,9 @@ public class CartDetailsController {
 	private CartDetailsService cartDetailsService;
 
 	@ApiOperation(value = "Creates a new CartDetails instance.")
-@RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     @WMAccessVisibility(value = AccessSpecifier.APP_ONLY)
-public CartDetails createCartDetails(@RequestBody CartDetails cartDetails) {
+    public CartDetails createCartDetails(@RequestBody CartDetails cartDetails) {
 		LOGGER.debug("Create CartDetails with information: {}" , cartDetails);
 
 		cartDetails = cartDetailsService.create(cartDetails);

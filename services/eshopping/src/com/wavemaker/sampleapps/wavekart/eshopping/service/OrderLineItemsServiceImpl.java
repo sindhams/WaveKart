@@ -52,8 +52,7 @@ public class OrderLineItemsServiceImpl implements OrderLineItemsService {
     @Override
 	public OrderLineItems create(OrderLineItems orderLineItems) {
         LOGGER.debug("Creating a new OrderLineItems with information: {}", orderLineItems);
-        OrderLineItems orderLineItemsCreated = this.wmGenericDao.create(orderLineItems);
-        return orderLineItemsCreated;
+        return this.wmGenericDao.create(orderLineItems);
     }
 
 	@Transactional(readOnly = true, value = "eshoppingTransactionManager")
@@ -80,6 +79,8 @@ public class OrderLineItemsServiceImpl implements OrderLineItemsService {
 	@Override
 	public OrderLineItems update(OrderLineItems orderLineItems) throws EntityNotFoundException {
         LOGGER.debug("Updating OrderLineItems with information: {}", orderLineItems);
+
+
         this.wmGenericDao.update(orderLineItems);
 
         OrderLineItemsId orderlineitemsId = new OrderLineItemsId();

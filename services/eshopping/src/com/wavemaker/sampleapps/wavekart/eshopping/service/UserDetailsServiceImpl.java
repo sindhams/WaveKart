@@ -26,7 +26,6 @@ import com.wavemaker.runtime.data.expression.QueryFilter;
 import com.wavemaker.runtime.data.model.AggregationInfo;
 import com.wavemaker.runtime.file.model.Downloadable;
 
-import com.wavemaker.sampleapps.wavekart.eshopping.CartDetails;
 import com.wavemaker.sampleapps.wavekart.eshopping.Orders;
 import com.wavemaker.sampleapps.wavekart.eshopping.UserAddressDetails;
 import com.wavemaker.sampleapps.wavekart.eshopping.UserDetails;
@@ -70,30 +69,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
 	public UserDetails create(UserDetails userDetails) {
         LOGGER.debug("Creating a new UserDetails with information: {}", userDetails);
-        UserDetails userDetailsCreated = this.wmGenericDao.create(userDetails);
-        if(userDetailsCreated.getOrderses() != null) {
-            for(Orders orderse : userDetailsCreated.getOrderses()) {
-                orderse.setUserDetails(userDetailsCreated);
-                LOGGER.debug("Creating a new child Orders with information: {}", orderse);
-                ordersService.create(orderse);
-            }
-        }
-
-        if(userDetailsCreated.getCartDetails() != null) {
-            CartDetails cartDetails = userDetailsCreated.getCartDetails();
-            LOGGER.debug("Creating a new child CartDetails with information: {}", cartDetails);
-            cartDetails.setUserDetails(userDetailsCreated);
-            cartDetailsService.create(cartDetails);
-        }
-
-        if(userDetailsCreated.getUserAddressDetailses() != null) {
-            for(UserAddressDetails userAddressDetailse : userDetailsCreated.getUserAddressDetailses()) {
-                userAddressDetailse.setUserDetails(userDetailsCreated);
-                LOGGER.debug("Creating a new child UserAddressDetails with information: {}", userAddressDetailse);
-                userAddressDetailsService.create(userAddressDetailse);
-            }
-        }
-        return userDetailsCreated;
+        return this.wmGenericDao.create(userDetails);
     }
 
 	@Transactional(readOnly = true, value = "eshoppingTransactionManager")
@@ -136,6 +112,21 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails update(UserDetails userDetails) throws EntityNotFoundException {
         LOGGER.debug("Updating UserDetails with information: {}", userDetails);
+
+        if(userDetails.getOrderses() != null) {
+            for(Orders _orders : userDetails.getOrderses()) {
+                _orders.setUserDetails(userDetails);
+            }
+        }
+        if(userDetails.getCartDetails() != null) {
+            userDetails.getCartDetails().setUserDetails(userDetails);
+        }
+        if(userDetails.getUserAddressDetailses() != null) {
+            for(UserAddressDetails _userAddressDetails : userDetails.getUserAddressDetailses()) {
+                _userAddressDetails.setUserDetails(userDetails);
+            }
+        }
+
         this.wmGenericDao.update(userDetails);
 
         Integer userdetailsId = userDetails.getUserId();

@@ -18,8 +18,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PostPersist;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
+import org.hibernate.annotations.Cascade;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -29,7 +32,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  */
 @Entity
 @Table(name = "`USER_DETAILS`", uniqueConstraints = {
-        @UniqueConstraint(name = "`SYS_IDX_SYS_CT_10112_10120`", columnNames = {"`EMAIL_ADDRESS`"})})
+            @UniqueConstraint(name = "`SYS_IDX_SYS_CT_10112_10120`", columnNames = {"`EMAIL_ADDRESS`"})})
 public class UserDetails implements Serializable {
 
     private Integer userId;
@@ -99,7 +102,8 @@ public class UserDetails implements Serializable {
     }
 
     @JsonInclude(Include.NON_EMPTY)
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "userDetails")
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy = "userDetails")
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     public List<Orders> getOrderses() {
         return this.orderses;
     }
@@ -108,7 +112,7 @@ public class UserDetails implements Serializable {
         this.orderses = orderses;
     }
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy = "userDetails")
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy = "userDetails")
     public CartDetails getCartDetails() {
         return this.cartDetails;
     }
@@ -118,13 +122,31 @@ public class UserDetails implements Serializable {
     }
 
     @JsonInclude(Include.NON_EMPTY)
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "userDetails")
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy = "userDetails")
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     public List<UserAddressDetails> getUserAddressDetailses() {
         return this.userAddressDetailses;
     }
 
     public void setUserAddressDetailses(List<UserAddressDetails> userAddressDetailses) {
         this.userAddressDetailses = userAddressDetailses;
+    }
+
+    @PostPersist
+    public void onPostPersist() {
+        if(orderses != null) {
+            for(Orders orders : orderses) {
+                orders.setUserDetails(this);
+            }
+        }
+        if(cartDetails != null) {
+            cartDetails.setUserDetails(this);
+        }
+        if(userAddressDetailses != null) {
+            for(UserAddressDetails userAddressDetails : userAddressDetailses) {
+                userAddressDetails.setUserDetails(this);
+            }
+        }
     }
 
     @Override

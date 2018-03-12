@@ -18,8 +18,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PostPersist;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
+import org.hibernate.annotations.Cascade;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -29,7 +32,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  */
 @Entity
 @Table(name = "`CART_DETAILS`", uniqueConstraints = {
-        @UniqueConstraint(name = "`SYS_IDX_SYS_CT_10152_10157`", columnNames = {"`USER_ID`"})})
+            @UniqueConstraint(name = "`SYS_IDX_SYS_CT_10152_10157`", columnNames = {"`USER_ID`"})})
 public class CartDetails implements Serializable {
 
     private Integer cartId;
@@ -57,7 +60,8 @@ public class CartDetails implements Serializable {
     }
 
     @JsonInclude(Include.NON_EMPTY)
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "cartDetails")
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy = "cartDetails")
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     public List<CartItems> getCartItemses() {
         return this.cartItemses;
     }
@@ -78,6 +82,15 @@ public class CartDetails implements Serializable {
         }
 
         this.userDetails = userDetails;
+    }
+
+    @PostPersist
+    public void onPostPersist() {
+        if(cartItemses != null) {
+            for(CartItems cartItems : cartItemses) {
+                cartItems.setCartDetails(this);
+            }
+        }
     }
 
     @Override

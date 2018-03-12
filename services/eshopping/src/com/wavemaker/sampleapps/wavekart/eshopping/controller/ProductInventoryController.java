@@ -52,9 +52,9 @@ public class ProductInventoryController {
 	private ProductInventoryService productInventoryService;
 
 	@ApiOperation(value = "Creates a new ProductInventory instance.")
-@RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     @WMAccessVisibility(value = AccessSpecifier.APP_ONLY)
-public ProductInventory createProductInventory(@RequestBody ProductInventory productInventory) {
+    public ProductInventory createProductInventory(@RequestBody ProductInventory productInventory) {
 		LOGGER.debug("Create ProductInventory with information: {}" , productInventory);
 
 		productInventory = productInventoryService.create(productInventory);

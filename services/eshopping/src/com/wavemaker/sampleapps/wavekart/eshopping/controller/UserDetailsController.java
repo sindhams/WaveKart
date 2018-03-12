@@ -54,9 +54,9 @@ public class UserDetailsController {
 	private UserDetailsService userDetailsService;
 
 	@ApiOperation(value = "Creates a new UserDetails instance.")
-@RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     @WMAccessVisibility(value = AccessSpecifier.APP_ONLY)
-public UserDetails createUserDetails(@RequestBody UserDetails userDetails) {
+    public UserDetails createUserDetails(@RequestBody UserDetails userDetails) {
 		LOGGER.debug("Create UserDetails with information: {}" , userDetails);
 
 		userDetails = userDetailsService.create(userDetails);

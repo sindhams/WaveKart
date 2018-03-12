@@ -32,8 +32,8 @@ public class OrderLineItems implements Serializable {
     private Integer quantity;
     private BigDecimal pricePerUnit;
     private BigDecimal productLineAmount;
-    private ProductDetails productDetails;
     private Orders orders;
+    private ProductDetails productDetails;
 
     @Id
     @Column(name = "`ORDER_ID`", nullable = false, scale = 0, precision = 10)
@@ -83,6 +83,20 @@ public class OrderLineItems implements Serializable {
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "`ORDER_ID`", referencedColumnName = "`ORDER_ID`", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "`SYS_FK_10196`"))
+    public Orders getOrders() {
+        return this.orders;
+    }
+
+    public void setOrders(Orders orders) {
+        if(orders != null) {
+            this.orderId = orders.getOrderId();
+        }
+
+        this.orders = orders;
+    }
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "`PRODUCT_ID`", referencedColumnName = "`PRODUCT_ID`", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "`SYS_FK_10195`"))
     public ProductDetails getProductDetails() {
         return this.productDetails;
@@ -96,19 +110,6 @@ public class OrderLineItems implements Serializable {
         this.productDetails = productDetails;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "`ORDER_ID`", referencedColumnName = "`ORDER_ID`", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "`SYS_FK_10196`"))
-    public Orders getOrders() {
-        return this.orders;
-    }
-
-    public void setOrders(Orders orders) {
-        if(orders != null) {
-            this.orderId = orders.getOrderId();
-        }
-
-        this.orders = orders;
-    }
 
     @Override
     public boolean equals(Object o) {

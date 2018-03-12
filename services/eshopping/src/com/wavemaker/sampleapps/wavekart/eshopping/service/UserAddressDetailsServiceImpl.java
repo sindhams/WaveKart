@@ -57,15 +57,7 @@ public class UserAddressDetailsServiceImpl implements UserAddressDetailsService 
     @Override
 	public UserAddressDetails create(UserAddressDetails userAddressDetails) {
         LOGGER.debug("Creating a new UserAddressDetails with information: {}", userAddressDetails);
-        UserAddressDetails userAddressDetailsCreated = this.wmGenericDao.create(userAddressDetails);
-        if(userAddressDetailsCreated.getOrderses() != null) {
-            for(Orders orderse : userAddressDetailsCreated.getOrderses()) {
-                orderse.setUserAddressDetails(userAddressDetailsCreated);
-                LOGGER.debug("Creating a new child Orders with information: {}", orderse);
-                ordersService.create(orderse);
-            }
-        }
-        return userAddressDetailsCreated;
+        return this.wmGenericDao.create(userAddressDetails);
     }
 
 	@Transactional(readOnly = true, value = "eshoppingTransactionManager")
@@ -92,6 +84,13 @@ public class UserAddressDetailsServiceImpl implements UserAddressDetailsService 
 	@Override
 	public UserAddressDetails update(UserAddressDetails userAddressDetails) throws EntityNotFoundException {
         LOGGER.debug("Updating UserAddressDetails with information: {}", userAddressDetails);
+
+        if(userAddressDetails.getOrderses() != null) {
+            for(Orders _orders : userAddressDetails.getOrderses()) {
+                _orders.setUserAddressDetails(userAddressDetails);
+            }
+        }
+
         this.wmGenericDao.update(userAddressDetails);
 
         Integer useraddressdetailsId = userAddressDetails.getUserAddresssId();

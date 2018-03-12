@@ -53,9 +53,9 @@ public class OrderLineItemsController {
 	private OrderLineItemsService orderLineItemsService;
 
 	@ApiOperation(value = "Creates a new OrderLineItems instance.")
-@RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     @WMAccessVisibility(value = AccessSpecifier.APP_ONLY)
-public OrderLineItems createOrderLineItems(@RequestBody OrderLineItems orderLineItems) {
+    public OrderLineItems createOrderLineItems(@RequestBody OrderLineItems orderLineItems) {
 		LOGGER.debug("Create OrderLineItems with information: {}" , orderLineItems);
 
 		orderLineItems = orderLineItemsService.create(orderLineItems);

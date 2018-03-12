@@ -32,8 +32,8 @@ public class CartItems implements Serializable {
     private Integer productQuantity;
     private BigDecimal currentPrice;
     private BigDecimal totalPrice;
-    private ProductDetails productDetails;
     private CartDetails cartDetails;
+    private ProductDetails productDetails;
 
     @Id
     @Column(name = "`CART_ID`", nullable = false, scale = 0, precision = 10)
@@ -83,6 +83,20 @@ public class CartItems implements Serializable {
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "`CART_ID`", referencedColumnName = "`CART_ID`", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "`SYS_FK_10165`"))
+    public CartDetails getCartDetails() {
+        return this.cartDetails;
+    }
+
+    public void setCartDetails(CartDetails cartDetails) {
+        if(cartDetails != null) {
+            this.cartId = cartDetails.getCartId();
+        }
+
+        this.cartDetails = cartDetails;
+    }
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "`PRODUCT_ID`", referencedColumnName = "`PRODUCT_ID`", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "`SYS_FK_10164`"))
     public ProductDetails getProductDetails() {
         return this.productDetails;
@@ -96,19 +110,6 @@ public class CartItems implements Serializable {
         this.productDetails = productDetails;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "`CART_ID`", referencedColumnName = "`CART_ID`", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "`SYS_FK_10165`"))
-    public CartDetails getCartDetails() {
-        return this.cartDetails;
-    }
-
-    public void setCartDetails(CartDetails cartDetails) {
-        if(cartDetails != null) {
-            this.cartId = cartDetails.getCartId();
-        }
-
-        this.cartDetails = cartDetails;
-    }
 
     @Override
     public boolean equals(Object o) {
