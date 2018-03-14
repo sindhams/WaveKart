@@ -8,6 +8,7 @@
             <wm-panel name="Panel_DealsOfTheDay" title="Deals of the Day">
                 <wm-carousel height="180" type="dynamic" name="carousel2" dataset="bind:Variables.Static_Var_Banners_Carousel.dataSet" controls="both" animationinterval="3">
                     <wm-carousel-template horizontalalign="center" name="carousel_template1" padding="unset 15px">
+                        <wm-button class="btn-default" caption="Button" type="button" margin="unset 0.5em" name="button3"></wm-button>
                         <wm-picture width="85%" name="picture12" picturesource="bind:Variables.Static_Var_Banners_Carousel.dataSet[$i].Banners" pictureaspect="Both" shape="rounded" cursor="default"></wm-picture>
                     </wm-carousel-template>
                 </wm-carousel>
